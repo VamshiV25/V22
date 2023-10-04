@@ -1,0 +1,31 @@
+package JDBC;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.util.Scanner;
+import java.sql.Date;
+public class PreparedSt {
+
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter Queen name and dob");
+		String name=sc.next();
+		String dob=sc.next();
+		Date mydate=new Date(0000-00-00);
+		String sql="insert into queen(sname,dob)"
+				+"values(?,?,?)";
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con=DriverManager.getConnection("jdbc:mysql://localhost/king","root","2059");
+			PreparedStatement pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, name);
+			pstmt.setDate(2, mydate.valueOf(dob));
+			int rows=pstmt.executeUpdate();
+			if(rows>0)
+				System.out.println(rows+"row(s) inserted");
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+}

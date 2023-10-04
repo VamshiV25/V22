@@ -1,0 +1,25 @@
+package JDBC;
+import java.sql.*;
+public class CreateTable {
+
+	public static void main(String[] args) {
+		String sql="create table queen\r\n(sid integer primary key auto_increment,"
+				+ "sname varchar(10),dob date)";
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			System.out.println("Diver Successfully Loaded...!!");
+			Connection con=DriverManager.getConnection
+					("jdbc:mysql://127.0.0.1:3306/king","root","2059");
+			System.out.println("Connection now Opened...!!");
+			Statement stmt=con.createStatement();
+			stmt.executeUpdate(sql);
+			System.out.println("Table Succesfully Created");
+			con.close();
+			stmt.close();
+		}
+		catch(Exception exp) {
+			exp.printStackTrace();
+		}
+	}
+
+}

@@ -1,0 +1,40 @@
+package JDBC;
+import java.util.Scanner;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.Date;
+public class Insert {
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter empid");
+		int empid=sc.nextInt();
+		System.out.println("Enter empnme");
+		String empname=sc.next();
+		System.out.println("Enter doj");
+		String doj=sc.next();
+		System.out.println("Enter basicsal");
+		double basicsal=sc.nextDouble();
+		Date mydate=new Date(0000-00-00);
+		String sql="Insert into Employee(Empid,empname,doj,basicsal)"
+				+"values(?,?,?,?)";
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con=DriverManager.getConnection
+					("jdbc:mysql://localhost:3306/Demo","root","2059");
+			PreparedStatement stmt=con.prepareStatement(sql);
+			stmt.setInt(1,empid);
+			stmt.setString(2,empname);
+			stmt.setDate(3, mydate.valueOf(doj));
+			stmt.setDouble(4,basicsal);
+			int rows=stmt.executeUpdate();
+			if(rows>0)
+				System.out.println(rows+" row(s) Succefully Inserted...!");
+			stmt.close();
+			con.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+}
